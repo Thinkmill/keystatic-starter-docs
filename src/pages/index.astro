@@ -1,5 +1,9 @@
 ---
 import DocsLayout from "../layouts/DocsLayout.astro";
+
+export const prerender = true;
 ---
 
-<DocsLayout>Instruction</DocsLayout>
+<DocsLayout title="index page">
+  <div class="prose">Introduction</div>
+</DocsLayout>

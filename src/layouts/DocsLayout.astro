@@ -1,7 +1,27 @@
 ---
 import SiteMeta from "../components/SiteMeta.astro";
 import { Nav } from "../components/Nav";
+import { createReader } from "@keystatic/core/reader";
+import config from "../../keystatic.config";
+import { inject } from "../lib/slugHelpers";
+import invariant from "tiny-invariant";
+
 const { title } = Astro.props;
+
+async function getPostsData() {
+  const reader = createReader("", config);
+  const pageSlugs = await reader.collections.pages.list();
+
+  return Promise.all([
+    ...pageSlugs.map(async (slug) => {
+      const page = await inject(slug, reader.collections.pages);
+      const content = (await page?.content()) || [];
+      return { ...page, content };
+    }),
+  ]);
+}
+
+const pages = await getPostsData();
 ---
 
 <style>
@@ -23,23 +43,20 @@ const { title } = Astro.props;
       class="max-w-7xl mx-auto grid md:h-screen grid-template text-neutral-900"
     >
       <Nav client:load>
-        <!--   <li>
-          <Link href="/" class="block md:hover:opacity-75">
-            Introduction
-          </Link>
+        <li>
+          <a href="/">Introduction</a>
         </li>
-        {pages &&
-          pages.map(({ slug, title }) => {
-            invariant(slug, "pages must have a slug");
-            return (
-              <li key={slug}>
-                <Link href={slug} class="block md:hover:opacity-75">
-                  {title}
-                </Link>
-              </li>
-            );
-          })}
-           -->
+        {
+          pages &&
+            pages.map(({ slug, title }) => {
+              invariant(slug, "pages must have a slug");
+              return (
+                <li>
+                  <a href={slug}>{title}</a>
+                </li>
+              );
+            })
+        }
       </Nav>
       <main class="overflow-auto px-6 md:px-9 py-32 md:pt-9 md:pb-20 w-full">
         <slot />
