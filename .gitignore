@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # code editor settings
 .vscode
+
+# deployment
+.vercel
