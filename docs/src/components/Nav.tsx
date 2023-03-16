@@ -59,7 +59,7 @@ const Nav: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   return (
     <>
-      {isOpen && <div className="fixed bg-white inset-0"></div>}
+      {isOpen && <div className="fixed bg-white inset-0 md:hidden"></div>}
       <FocusLock
         returnFocus
         disabled={!isOpen}
