@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef, ReactNode } from "react";
 import FocusLock from "react-focus-lock";
-import Link from "next/link";
 
 const Nav: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -79,7 +78,7 @@ const Nav: React.FC<{ children: ReactNode }> = ({ children }) => {
         >
           <div className="p-4 md:pb-0 break-words bg-white flex justify-between md:static">
             <h3 className="p-2 md:p-5">
-              <Link href="/">✏️ My Project</Link>
+              <a href="/">✏️ My Project</a>
             </h3>
             <button
               className="p-2 md:p-5 md:hidden"

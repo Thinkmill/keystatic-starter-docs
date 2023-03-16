@@ -1,0 +1,26 @@
+---
+import { createReader } from "@keystatic/core/reader";
+import config from "../../keystatic.config";
+import DocsLayout from "../layouts/DocsLayout.astro";
+import { inject } from "../lib/slugHelpers";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const reader = createReader("", config);
+  const pageSlugs = await reader.collections.pages.list();
+  const pages = await Promise.all(
+    pageSlugs.map(async (slug) => {
+      const post = await inject(slug, reader.collections.pages);
+      return { ...post };
+    })
+  );
+  return pages.map(({ slug }) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+---
+
+<DocsLayout title="index page">
+  <div class="prose">Introduction {slug}</div>
+</DocsLayout>
