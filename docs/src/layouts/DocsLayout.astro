@@ -58,7 +58,9 @@ const pages = await getPostsData();
             })
         }
       </Nav>
-      <main class="overflow-auto px-6 md:px-9 py-32 md:pt-9 md:pb-20 w-full">
+      <main
+        class="overflow-auto px-6 md:px-9 py-32 md:pt-9 md:pb-20 w-full [grid-area:b]"
+      >
         <slot />
       </main>
     </div>
